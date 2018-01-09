@@ -23,6 +23,15 @@ go build main.go
 ./main --list list.txt
 ```
 
+Release's
+-----
+
+Pre-built binarys are avaliable on the [releases](https://github.com/random-robbie/AWS-Scanner/releases/download/v0.1/Releases-Beta.zip) tab.
+
+
+
+
+
 Screenshot
 ------
 
