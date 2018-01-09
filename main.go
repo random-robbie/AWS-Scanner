@@ -423,7 +423,7 @@ func main () {
 			}
 			//find Cloudfront distribution end point.
 			if strings.Contains(responseString, "cloudfront.net") == true {
-				color.HiGreen("[*] Clodufront found! [*]\n")
+				color.HiGreen("[*] Cloudfront found! [*]\n")
 				cfregex(responseString, url)
 
 			} else {
