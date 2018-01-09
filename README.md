@@ -62,6 +62,6 @@ Input must be with out https:// as this is hardcoded at the moment.
 To Do
 -----
 
-Fix bugs like the one on CNN.com where they dont close the dir and it grabs a load of messy js
-Auto detect if prefix is needed or not
-get rid of the mass regex functions and try do it as one.
+[*] Fix bugs like the one on CNN.com where they dont close the dir and it grabs a load of messy js
+[*] Auto detect if prefix is needed or not
+[*] get rid of the mass regex functions and try do it as one.
