@@ -70,3 +70,9 @@ To Do
 
 
 [  ] get rid of the mass regex functions and try do it as one.
+
+
+Thanks
+----
+[Glove](https://github.com/Glove)
+
