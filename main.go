@@ -91,10 +91,10 @@ func readLines(path string) (lines []string, err error) {
 func writes3bucket(s3bucket,url string){
 
         //check if file exists
-        if _, err := os.Stat("s3-bucket.txt"); os.IsNotExist(err) {
+        if _, err := os.Stat("s3-bucket.csv"); os.IsNotExist(err) {
                 // create file if not exists
                 if os.IsNotExist(err) {
-                        var file, err = os.Create("s3-bucket.txt")
+                        var file, err = os.Create("s3-bucket.csv")
                         if isError(err) { return }
                         defer file.Close()
                 }
@@ -113,10 +113,10 @@ func writes3bucket(s3bucket,url string){
 func writecf(cf,url string){
 
         //check if file exists
-        if _, err := os.Stat("cf-dist.txt"); os.IsNotExist(err) {
+        if _, err := os.Stat("cf-dist.csv"); os.IsNotExist(err) {
                 // create file if not exists
                 if os.IsNotExist(err) {
-                        var file, err = os.Create("cf-dist.txt")
+                        var file, err = os.Create("cf-dist.csv")
                         if isError(err) { return }
                         defer file.Close()
                 }
