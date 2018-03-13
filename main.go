@@ -2,20 +2,26 @@
 package main
 
 import (
-        "net/http"
-        "crypto/tls"
-        "flag"
-        "fmt"
-        "os"
-        "bufio"
-        "bytes"
-        "io"
-        "strings"
-        "io/ioutil"
-        "regexp"
-        "github.com/fatih/color"
+	"bufio"
+	"bytes"
+	"crypto/tls"
+	"flag"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"net"
+	"net/http"
+	"os"
+	"regexp"
+	"strings"
+	"time"
 
+	"github.com/fatih/color"
 )
+
+
+
+
 var (
         tr     = &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
         list = flag.String("list", "list.txt", "Default: list.txt")
@@ -54,7 +60,7 @@ func isError(err error) bool {
                 fmt.Println(err.Error())
         }
 
-        return (err != nil)
+        return err != nil
 }
 
 
@@ -148,6 +154,7 @@ func runAWSCheck (responseString,url string) {
         }
 }
 
+//noinspection GoUnresolvedReference
 func runCloudfrontCheck (responseString,url string) {
         for _, each := range cloudfronturls {
                 re, _ := regexp.Compile(each)
@@ -193,6 +200,13 @@ func main () {
                 url := fmt.Sprintf("https://%s", line)
                 tr := &http.Transport{
                         TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+                        Dial: (&net.Dialer{
+                                Timeout:   30 * time.Second,
+                                KeepAlive: 30 * time.Second,
+                        }).Dial,
+                        TLSHandshakeTimeout:   10 * time.Second,
+                        ResponseHeaderTimeout: 10 * time.Second,
+                        ExpectContinueTimeout: 1 * time.Second,
                 }
                 // Do not verify certificates
                 client := &http.Client{
