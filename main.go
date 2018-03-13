@@ -105,7 +105,7 @@ func writes3bucket(s3bucket,url,s3path string){
         }
 
 
-        fileHandle, _ := os.OpenFile(s3path, os.O_APPEND, 0666)
+        fileHandle, _ := os.OpenFile(s3path, os.O_RDWR, 0644)
         writer := bufio.NewWriter(fileHandle)
         defer fileHandle.Close()
         stringtolog := fmt.Sprintf("%s,%s",url,s3bucket)
@@ -127,7 +127,7 @@ func writecf(cf,url,cfpath string){
         }
 
 
-        fileHandle, _ := os.OpenFile(s3path, os.O_APPEND, 0666)
+        fileHandle, _ := os.OpenFile(s3path, os.O_RDWR, 0644)
         writer := bufio.NewWriter(fileHandle)
         defer fileHandle.Close()
         stringtolog := fmt.Sprintf("%s,%s",url,cf)
