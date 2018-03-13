@@ -2,21 +2,21 @@
 package main
 
 import (
-	"bufio"
-	"bytes"
-	"crypto/tls"
-	"flag"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"net"
-	"net/http"
-	"os"
-	"regexp"
-	"strings"
-	"time"
+        "bufio"
+        "bytes"
+        "crypto/tls"
+        "flag"
+        "fmt"
+        "io"
+        "io/ioutil"
+        "net"
+        "net/http"
+        "os"
+        "regexp"
+        "strings"
+        "time"
 
-	"github.com/fatih/color"
+        "github.com/fatih/color"
 )
 
 
@@ -25,25 +25,25 @@ import (
 var (
         tr     = &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
         list = flag.String("list", "list.txt", "Default: list.txt")
-        s3path = "s3-bucket.txt"
-        cfpath = "cf-url.txt"
+        s3path = "s3-bucket.csv"
+        cfpath = "cloudfront.csv"
         awsurls = []string {
-			"http://s3.amazonaws.com/([-A-z0-9.]+)",
-			"https://s3.amazonaws.com/([-A-z0-9.]+)",
-			"//s3.amazonaws.com/([-A-z0-9.]+)",
-			"http://([-A-z0-9.]+).amazonaws.com",
-			"https://([-A-z0-9.]+).amazonaws.com",
-			"//([-A-z0-9.]+).amazonaws.com",
-			"http://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
-			"https://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
-			"//(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+                "http://s3.amazonaws.com/([-A-z0-9.]+)",
+                "https://s3.amazonaws.com/([-A-z0-9.]+)",
+                "//s3.amazonaws.com/([-A-z0-9.]+)",
+                "http://([-A-z0-9.]+).amazonaws.com",
+                "https://([-A-z0-9.]+).amazonaws.com",
+                "//([-A-z0-9.]+).amazonaws.com",
+                "http://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+                "https://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+                "//(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
 
         }
 
         cloudfronturls = []string {
                 "https://(.+?).cloudfront.net/",
-				"http://(.+?).cloudfront.net/",
-				"//(.+?).cloudfront.net/",
+                "http://(.+?).cloudfront.net/",
+                "//(.+?).cloudfront.net/",
         }
 
 )
@@ -92,13 +92,13 @@ func readLines(path string) (lines []string, err error) {
 
 
 // write file of s3bucket
-func writes3bucket(s3bucket,url string){
+func writes3bucket(s3bucket,url,s3path string){
 
         //check if file exists
-        if _, err := os.Stat("s3-bucket.csv"); os.IsNotExist(err) {
+        if _, err := os.Stat(s3path); os.IsNotExist(err) {
                 // create file if not exists
                 if os.IsNotExist(err) {
-                        var file, err = os.Create("s3-bucket.csv")
+                        var file, err = os.Create(s3path)
                         if isError(err) { return }
                         defer file.Close()
                 }
@@ -114,13 +114,13 @@ func writes3bucket(s3bucket,url string){
 }
 
 // write file of s3bucket
-func writecf(cf,url string){
+func writecf(cf,url,cfpath string){
 
         //check if file exists
-        if _, err := os.Stat("cf-dist.csv"); os.IsNotExist(err) {
+        if _, err := os.Stat(cfpath); os.IsNotExist(err) {
                 // create file if not exists
                 if os.IsNotExist(err) {
-                        var file, err = os.Create("cf-dist.csv")
+                        var file, err = os.Create(cfpath)
                         if isError(err) { return }
                         defer file.Close()
                 }
@@ -139,11 +139,11 @@ func runAWSCheck (responseString,url string) {
         for _, each := range awsurls {
                 re, _ := regexp.Compile(each)
                 cf := re.FindString(responseString)
-        
+
                 if cf != "" {
                         s3bucket := fmt.Sprintf("%s",cf)
                         color.HiGreen("[*] Logging... %s\n",s3bucket)
-                        writes3bucket(cf,url)
+                        writes3bucket(cf,url,s3path)
                 }
         }
 }
@@ -153,11 +153,11 @@ func runCloudfrontCheck (responseString,url string) {
         for _, each := range cloudfronturls {
                 re, _ := regexp.Compile(each)
                 cf := re.FindString(responseString)
-        
+
                 if cf != "" {
                         s3bucket := fmt.Sprintf("%s",cf)
                         color.HiGreen("[*] Logging... %s\n",s3bucket)
-                        writecf(cf,url)
+                        writecf(cf,url,cfpath)
                 }
         }
 }
