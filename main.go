@@ -30,16 +30,20 @@ var (
         awsurls = []string {
 			"http://s3.amazonaws.com/([-A-z0-9.]+)",
 			"https://s3.amazonaws.com/([-A-z0-9.]+)",
+			"//s3.amazonaws.com/([-A-z0-9.]+)",
 			"http://([-A-z0-9.]+).amazonaws.com",
 			"https://([-A-z0-9.]+).amazonaws.com",
+			"//([-A-z0-9.]+).amazonaws.com",
 			"http://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
 			"https://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+			"//(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
 
         }
 
         cloudfronturls = []string {
                 "https://(.+?).cloudfront.net/",
 				"http://(.+?).cloudfront.net/",
+				"//(.+?).cloudfront.net/",
         }
 
 )
