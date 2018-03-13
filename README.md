@@ -25,7 +25,7 @@ This will output a text file with URL,CF or URL,s3bucketurl
 
 
 
-THIS IS A WORK IN PROGRESS!
+THIS IS A WORK IN PROGRESS! (currently broken as it will write in windows but not in linux)
 
 
 Install
