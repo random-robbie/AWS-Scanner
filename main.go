@@ -28,24 +28,13 @@ var (
         s3path = "s3-bucket.txt"
         cfpath = "cf-url.txt"
         awsurls = []string {
-                "s3.amazonaws.com/(.+?)/",
-                "s3.amazonaws.com/(.+?)/",
-                "s3-us-east-2.amazonaws.com/(.+?)/",
-                "s3-us-west-1.amazonaws.com/(.+?)/",
-                "s3-us-west-2.amazonaws.com/(.+?)/",
-                "s3.ca-central-1.amazonaws.com/(.+?)/",
-                "s3-ap-south-1.amazonaws.com/(.+?)/",
-                "s3-ap-northeast-2.amazonaws.com/(.+?)/",
-                "s3-ap-southeast-1.amazonaws.com/(.+?)/",
-                "s3-ap-northeast-1.amazonaws.com/(.+?)/",
-                "s3-eu-central-1.amazonaws.com/(.+?)/",
-                "s3-eu-west-1.amazonaws.com/(.+?)/",
-                "s3-eu-west-2.amazonaws.com/(.+?)/",
-                "s3-eu-west-3.amazonaws.com/(.+?)/",
-                "s3.sa-east-1.amazonaws.com/(.+?)/",
-                "https://(.+?).s3.amazonaws.com",
-                "s3.amazonaws.com/(.+?)/",
-                "s3-ap-southeast-2.amazonaws.com/(.+?)/",
+			"http://s3.amazonaws.com/([-A-z0-9.]+)",
+			"https://s3.amazonaws.com/([-A-z0-9.]+)",
+			"http://([-A-z0-9.]+).amazonaws.com",
+			"https://([-A-z0-9.]+).amazonaws.com",
+			"http://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+			"https://(s3.|s3-)[a-zA-Z0-9-]*.amazonaws.com/([-A-z0-9.]+)",
+
         }
 
         cloudfronturls = []string {
@@ -178,7 +167,7 @@ func main () {
         color.HiGreen("[*]                                 [*]\n")
         color.HiGreen("[*]    S3 Buckets for the Win       [*]\n")
         color.HiGreen("[*]                                 [*]\n")
-        color.HiGreen("[*]                                 [*]\n\n\n\n")
+        color.HiGreen("[*]       Version 1.0               [*]\n\n\n\n")
 
         //Check the server is not blank or empty
         if *list == "" {
