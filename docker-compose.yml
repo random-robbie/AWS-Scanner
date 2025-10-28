@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  aws-scanner:
+    build: .
+    image: aws-scanner:latest
+    container_name: aws-scanner
+    volumes:
+      # Mount your input list file
+      - ./list.txt:/app/list.txt:ro
+      # Mount output directory for CSV files
+      - ./output:/app:rw
+    command: --list list.txt
+    restart: "no"

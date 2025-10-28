@@ -45,6 +45,42 @@ go build -o aws-scanner main.go
 go run main.go --list list.txt
 ```
 
+### Using Docker
+
+Build the Docker image:
+
+```bash
+docker build -t aws-scanner .
+```
+
+Run the scanner with Docker:
+
+```bash
+# Mount your URL list and output directory
+docker run -v $(pwd)/list.txt:/app/list.txt -v $(pwd)/output:/app/output aws-scanner --list list.txt
+
+# The CSV files will be saved to ./output directory
+```
+
+Or use docker-compose (create a `docker-compose.yml`):
+
+```yaml
+version: '3.8'
+services:
+  aws-scanner:
+    build: .
+    volumes:
+      - ./list.txt:/app/list.txt
+      - ./output:/app/output
+    command: --list list.txt
+```
+
+Then run:
+
+```bash
+docker-compose up
+```
+
 ## Usage
 
 ### Basic Scan

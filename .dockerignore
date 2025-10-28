@@ -1,34 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+README.md
+CONTRIBUTING.md
+ISSUE_TEMPLATE.md
+LICENSE
+
 # Output files
 *.csv
 s3-bucket.txt
 cf-url.txt
-cloudfront.csv
-s3-bucket.csv
-output/
 
 # Test files
-test-small.txt
-test-medium.txt
+test-*.txt
 s3amazonawscom.txt
 
 # Binaries
 aws-scanner
 main
 
-# IDE files
-*.iml
-*.xml
-.idea/
-.vscode/
+# IDE
+.idea
+.vscode
 *.swp
 *.swo
 *~
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
-# Go files
+# Go
 *.exe
 *.exe~
 *.dll
