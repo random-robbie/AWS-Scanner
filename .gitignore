@@ -8,6 +8,7 @@ s3-bucket.csv
 # Test files
 test-small.txt
 test-medium.txt
+s3amazonawscom.txt
 
 # Binaries
 aws-scanner
