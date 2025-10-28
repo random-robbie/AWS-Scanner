@@ -25,16 +25,29 @@ This will output a text file with URL,CF or URL,s3bucketurl
 
 
 
-THIS IS A WORK IN PROGRESS! (currently broken as it will write in windows but not in linux)
-
-
 Install
 ------
 
+**Requirements:** Go 1.16 or later
+
+```bash
+# Clone the repository
+git clone https://github.com/random-robbie/AWS-Scanner.git
+cd AWS-Scanner
+
+# Download dependencies (automatically handled by Go modules)
+go mod tidy
+
+# Build the binary
+go build -o aws-scanner main.go
+
+# Run the scanner
+./aws-scanner --list list.txt
 ```
-go get github.com/fatih/color
-go build main.go
-./main --list list.txt
+
+Or build and run directly:
+```bash
+go run main.go --list list.txt
 ```
 
 Release's
