@@ -1,11 +1,37 @@
-
-*.iml
-*.xml
+# Output files
+*.csv
 s3-bucket.txt
 cf-url.txt
 cloudfront.csv
 s3-bucket.csv
 
+# Test files
+test-small.txt
+test-medium.txt
+
 # Binaries
 aws-scanner
 main
+
+# IDE files
+*.iml
+*.xml
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work

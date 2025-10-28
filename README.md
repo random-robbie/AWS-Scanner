@@ -1,94 +1,114 @@
 # AWS-Scanner
 
+A high-performance security tool for discovering AWS S3 buckets and CloudFront distributions on target websites.
 
-```
-  /$$$$$$  /$$      /$$  /$$$$$$           /$$$$$$                                                             
- /$$__  $$| $$  /$ | $$ /$$__  $$         /$$__  $$                                                            
-| $$  \ $$| $$ /$$$| $$| $$  \__/        | $$  \__/  /$$$$$$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$ 
-| $$$$$$$$| $$/$$ $$ $$|  $$$$$$  /$$$$$$|  $$$$$$  /$$_____/ |____  $$| $$__  $$| $$__  $$ /$$__  $$ /$$__  $$
-| $$__  $$| $$$$_  $$$$ \____  $$|______/ \____  $$| $$        /$$$$$$$| $$  \ $$| $$  \ $$| $$$$$$$$| $$  \__/
-| $$  | $$| $$$/ \  $$$ /$$  \ $$         /$$  \ $$| $$       /$$__  $$| $$  | $$| $$  | $$| $$_____/| $$      
-| $$  | $$| $$/   \  $$|  $$$$$$/        |  $$$$$$/|  $$$$$$$|  $$$$$$$| $$  | $$| $$  | $$|  $$$$$$$| $$      
-|__/  |__/|__/     \__/ \______/          \______/  \_______/ \_______/|__/  |__/|__/  |__/ \_______/|__/   
-```
+## Overview
 
+AWS-Scanner efficiently scans a list of URLs to identify exposed AWS resources including:
+- Amazon S3 buckets
+- CloudFront distributions
 
+The scanner outputs clean CSV files with discovered resources for further analysis.
 
+## Features
 
+- ✅ **Auto-detection of URL protocols** (http/https)
+- ✅ **Smart JavaScript filtering** to avoid parsing messy inline scripts
+- ✅ **Response size limiting** (5MB) to prevent memory issues
+- ✅ **Unified regex engine** for efficient pattern matching
+- ✅ **Deduplication** of discovered resources
+- ✅ **Clean CSV output** with normalized HTTPS URLs
+- ✅ **Concurrent scanning** with configurable timeouts
 
-Scans a list of websites for Cloudfront or S3 Buckets.
+## Installation
 
-This will output a text file with URL,CF or URL,s3bucketurl
+### Requirements
+- Go 1.16 or later
 
-
-
-
-
-
-Install
-------
-
-**Requirements:** Go 1.16 or later
+### Building from Source
 
 ```bash
 # Clone the repository
 git clone https://github.com/random-robbie/AWS-Scanner.git
 cd AWS-Scanner
 
-# Download dependencies (automatically handled by Go modules)
+# Download dependencies
 go mod tidy
 
 # Build the binary
 go build -o aws-scanner main.go
-
-# Run the scanner
-./aws-scanner --list list.txt
 ```
 
-Or build and run directly:
+### Quick Run (Without Building)
+
 ```bash
 go run main.go --list list.txt
 ```
 
-Release's
------
+## Usage
 
-Pre-built binarys are avaliable on the [releases](https://github.com/random-robbie/AWS-Scanner/releases/download/v0.1/Releases-Beta.zip) tab.
+### Basic Scan
 
+```bash
+./aws-scanner --list list.txt
+```
 
+### Input Format
 
+Create a text file (`list.txt`) with one URL per line:
 
+```
+github.com
+https://www.example.com
+http://test.com
+```
 
-Screenshot
-------
+**Note:** URLs can be provided with or without protocol prefixes (http:// or https://). The scanner will automatically detect and normalize them.
 
-[![Capture.png](https://s9.postimg.org/a0a819pnj/Capture.png)](https://postimg.org/image/y40zpk84b/)
+### Output
 
+The scanner generates two CSV files:
 
-Notes
------
+- **`s3-bucket.csv`** - Discovered S3 buckets
+- **`cloudfront.csv`** - Discovered CloudFront distributions
 
-Input must be with out https:// as this is hardcoded at the moment.
+**Format:** `source_url,discovered_resource`
 
+Example:
+```csv
+https://github.com/,https://github-cloud.s3.amazonaws.com
+https://example.com/,https://example-assets.cloudfront.net
+```
 
+## Recent Improvements
 
-To Do
------
+- [x] Unified regex function for cleaner codebase
+- [x] Auto-detection of URL protocols
+- [x] JavaScript and script tag filtering
+- [x] Response body size limiting
+- [x] Normalized HTTPS-only output
+- [x] Duplicate resource removal
 
-[  ] Fix bugs like the one on CNN.com where they dont close the dir and it grabs a load of messy js
+## Contributing
 
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
 
-[  ] Auto detect if prefix is needed or not
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+## License
 
+See [LICENSE](LICENSE) file for details.
 
-[  ] get rid of the mass regex functions and try do it as one.
+## Credits
 
+Special thanks to [Glove](https://github.com/Glove) for contributions.
 
-Thanks
-----
-[Glove](https://github.com/Glove)
+## Hosting
 
-Use a VPS from DO
+Use a VPS from DigitalOcean:
 
 [![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=e22bbff5f6f1&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
+
+---
+
+**Disclaimer:** This tool is intended for security research and authorized testing only. Always obtain proper authorization before scanning any websites or networks you do not own.
