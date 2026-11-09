@@ -198,9 +198,9 @@ func main() {
 			Transport: tr,
 		}
 
-		// Create HEAD request with random user agent.
+		// Create HEAD request with a current browser user agent.
 		req, _ := http.NewRequest("GET", url, nil)
-		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0")
+		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36")
 
 		if resp, err := client.Do(req); err == nil {
 
