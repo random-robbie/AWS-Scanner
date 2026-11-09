@@ -18,12 +18,12 @@ The scanner outputs clean CSV files with discovered resources for further analys
 - ✅ **Unified regex engine** for efficient pattern matching
 - ✅ **Deduplication** of discovered resources
 - ✅ **Clean CSV output** with normalized HTTPS URLs
-- ✅ **Concurrent scanning** with configurable timeouts
+- ✅ **Request timeouts** (30 seconds per site) to avoid hangs
 
 ## Installation
 
 ### Requirements
-- Go 1.16 or later
+- Go 1.24 or later
 
 ### Building from Source
 
@@ -56,10 +56,11 @@ docker build -t aws-scanner .
 Run the scanner with Docker:
 
 ```bash
-# Mount your URL list and output directory
-docker run -v $(pwd)/list.txt:/app/list.txt -v $(pwd)/output:/app/output aws-scanner --list list.txt
+# Mount your URL list and output directory, and set the working directory
+# to the mounted output folder so the CSV files are written there
+docker run -v $(pwd)/list.txt:/data/list.txt -v $(pwd)/output:/data -w /data aws-scanner --list list.txt
 
-# The CSV files will be saved to ./output directory
+# The CSV files (s3-bucket.csv and cloudfront.csv) will be saved to ./output
 ```
 
 Or use docker-compose (create a `docker-compose.yml`):
@@ -69,9 +70,10 @@ version: '3.8'
 services:
   aws-scanner:
     build: .
+    working_dir: /data
     volumes:
-      - ./list.txt:/app/list.txt
-      - ./output:/app/output
+      - ./list.txt:/data/list.txt
+      - ./output:/data
     command: --list list.txt
 ```
 
@@ -147,4 +149,8 @@ Use a VPS from DigitalOcean:
 
 ---
 
-**Disclaimer:** This tool is intended for security research and authorized testing only. Always obtain proper authorization before scanning any websites or networks you do not own.
+## Author
+
+Robbie Wiggins — [What-Security](https://www.what-security.co.uk) · [GitHub](https://github.com/random-robbie)
+
+**Disclaimer:** This tool is intended for security research and authorised testing only. Always obtain proper authorisation before scanning any websites or networks you do not own.
