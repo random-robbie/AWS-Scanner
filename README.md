@@ -91,6 +91,21 @@ docker-compose up
 ./aws-scanner --list list.txt
 ```
 
+### Flags
+
+| Flag | Default | Description |
+|---|---|---|
+| `--list` | `list.txt` | File of URLs to scan, one per line |
+| `-c` | `10` | Number of concurrent workers |
+| `-timeout` | `30s` | Per-request timeout (Go duration) |
+| `-insecure` | `true` | Skip TLS certificate verification |
+
+Scans run concurrently. **Exit code 1** when at least one finding was written, so the scanner can drive pipelines:
+
+```bash
+./aws-scanner --list list.txt || ./notify-new-buckets.sh
+```
+
 ### Input Format
 
 Create a text file (`list.txt`) with one URL per line:
